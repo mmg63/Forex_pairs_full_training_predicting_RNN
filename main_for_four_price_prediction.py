@@ -114,7 +114,10 @@ if load_model:
     loss = checkpoint["loss_Low"]
     loss = checkpoint["loss_Close"]
 
-    print("epoc : {}, loss :{}".format(epoch, loss))
+    print("epoc : {}, loss :{}".format(epoch, loss_Open))
+    print("epoc : {}, loss :{}".format(epoch, loss_High))
+    print("epoc : {}, loss :{}".format(epoch, loss_Low))
+    print("epoc : {}, loss :{}".format(epoch, loss_Close))
 else:
     model_Open.train()
     model_High.train()
@@ -138,8 +141,14 @@ else:
         batches = iter(loader)
         for batch_idx in range(len(loader)-4):
             samples, target = next(batches)
-            h1, h2, y_hat = model(samples)
-            loss += criterion(y_hat, target)
+            h1, h2, y_hat_Open = model_Open(samples)
+            h1, h2, y_hat_High = model_High(samples)
+            h1, h2, y_hat_Low = model_Low(samples)
+            h1, h2, y_hat_Close = model_Close(samples)
+            loss_Open += criterion_Open(y_hat_Open, target)
+            loss_High += criterion_High(y_hat_High, target)
+            loss_Low += criterion_Low(y_hat_Low, target)
+            loss_Close += criterion_Close(y_hat_Close, target)
         
         # append losses for plot
         train_loss_Open.append(loss_Open.item())
@@ -159,15 +168,28 @@ else:
         time_end = time()
         
         if (epoch % 10 == 0):
-            save_model(model, optimizer, epoch, loss)
-            print(f'epoch: {epoch}, time: %.4f , loss: %.4f' % ((time_end - time_satrt), loss.item()))
+            save_model(model_Open, model_High, model_Low, model_Close, 
+                        optimizer_Open, optimizer_High, optimizer_Low, optimizer_Close,
+                        epoch, loss_Open, loss_High, loss_Low, loss_Close)
+            print(f'epoch: {epoch}, time: %.4f , loss_Open: %.4f' % ((time_end - time_satrt), loss_Open.item()))
+            print(f'epoch: {epoch}, time: %.4f , loss_High: %.4f' % ((time_end - time_satrt), loss_High.item()))
+            print(f'epoch: {epoch}, time: %.4f , loss_Low: %.4f' % ((time_end - time_satrt), loss_Low.item()))
+            print(f'epoch: {epoch}, time: %.4f , loss_Close: %.4f' % ((time_end - time_satrt), loss_Close.item()))
         
         if (epoch == epochs - 1):
-            save_model(model, optimizer, epoch, loss)
-    plot_acc_loss(train_loss, "train loss")
+            save_model(model_Open, model_High, model_Low, model_Close, 
+                        optimizer_Open, optimizer_High, optimizer_Low, optimizer_Close,
+                        epoch, loss_Open, loss_High, loss_Low, loss_Close)
+    plot_acc_loss(train_loss_Open, "train loss_Open")
+    plot_acc_loss(train_loss_High, "train l_Highoss")
+    plot_acc_loss(train_loss_Low, "train l_Lowoss")
+    plot_acc_loss(train_loss_Close, "train lo_Closess")
 
 #%% test phase
-model.eval()
+model_Open.eval()
+model_High.eval()
+model_Low.eval()
+model_Close.eval()
 
 test_dataset = Forex_test_Dataset(dataset_filePath,
                                 transform=None, 
@@ -180,13 +202,25 @@ test_loader = DataLoader(test_dataset, batch_size=dataloader_batch_size,
                         shuffle=False, drop_last=True, ) 
 test_batches = iter(loader)
 test_value = []
+test_Pred_Open = []
+test_Pred_High = []
+test_Pred_Low = []
+test_Pred_Close = []
 for batch_idx in range(len(test_loader)-4):
     samples, target = next(test_batches)
-    _, _, y_pred = model(samples)
+    _, _, y_pred_Open = model_Open(samples)
+    _, _, y_pred_High = model_High(samples)
+    _, _, y_pred_Low = model_Low(samples)
+    _, _, y_pred_Close = model_Close(samples)
     test_value.append(target)
-    test_acc.append(y_pred.item())
-plot_test_values_predicted(test_value[-11:], test_acc[-10:],"test real value", "test predicted value" )
-plot_test_values_predicted(test_value, test_acc[1:],"test real value", "test predicted value" )
+    
+    test_Pred_Open.append(y_pred_Open.item())
+    test_Pred_High.append(y_pred_High.item())
+    test_Pred_Low.append(y_pred_Low.item())
+    test_Pred_Close.append(y_pred_Close.item())
+
+plot_test_values_predicted(test_value[-11:], test_Pred_Close[-10:],"test real value", "test predicted value" )
+# plot_test_values_predicted(test_value, test_acc[1:],"test real value", "test predicted value" )
 
 # plot_acc_loss(test_acc, "test predicted value")
 # plot_acc_loss(test_value, "test real value")

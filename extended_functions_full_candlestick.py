@@ -51,11 +51,23 @@ def adjust_learning_rate(optimizer, epoch):
         param_group['lr'] = lr
 
 # saving model parameters
-def save_model(model, optimizer, epoch, loss):
-    state_dicts = { 'model_state_dict': model.state_dict(),
-                    'optimizer_state_dict': optimizer.state_dict(), 
+def save_model(model_Open, model_High, model_Low, model_Close, 
+                optimizer_Open, optimizer_High, Optimizer_Low, Optimizer_Close,
+                epoch, 
+                loss_Open, loss_High, loss_Low, loss_Close):
+    state_dicts = { 'model_Open_state_dict': model_Open.state_dict(),
+                    'model_Hight_state_dict': model_High.state_dict(),
+                    'model_Low_state_dict': model_Low.state_dict(),
+                    'model_Close_state_dict': model_Close.state_dict(),
+                    'optimizer_Open_state_dict': optimizer_Open.state_dict(), 
+                    'optimizer_High_state_dict': optimizer_High.state_dict(), 
+                    'optimizer_Low_state_dict': Optimizer_Low.state_dict(), 
+                    'optimizer_Close_state_dict': Optimizer_Close.state_dict(), 
                     'epoch': epoch, 
-                    'loss': loss
+                    'loss_Open': loss_Open,
+                    'loss_High': loss_High,
+                    'loss_Low': loss_Low,
+                    'loss_Close': loss_Close
                     }
     model_state_dict_path = parameters.model_state_dict_path
     torch.save(state_dicts, model_state_dict_path)
