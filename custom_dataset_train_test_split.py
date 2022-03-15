@@ -32,13 +32,16 @@ class Forex_train_Dataset(Dataset):
         
         # read CSV dataset and change it to torch.tensor type
         self.dataset_csv = pd.read_csv(csv_file, encoding="UTF=8")
+        # remove date from dataset in order to prepare data for test
         self.dataset = torch.tensor(self.dataset_csv.values[:,1:].tolist())
-        
         # get train samples from the dataset and set it again to the dataset
         len_dataset = len(self.dataset)
-        print(len_dataset)
+        
         self.dataset = self.dataset[:int(len_dataset*self.train_size_ratio), :]
-        print(len(self.dataset))
+        
+        # get dates for plotting candles if it is neccessary 
+        self.dates = self.dataset_csv.values[:int(len_dataset*self.train_size_ratio),0].tolist()
+        
 
 
         # normalize dataset based on its features.
@@ -46,6 +49,10 @@ class Forex_train_Dataset(Dataset):
             self.dataset[:,i] = (self.dataset[:,i] - self.dataset[:,i].mean()) / self.dataset[:,i].std()
         # get headers of dataset without timestamp colums,the first columns.
         self.headers = self.dataset_csv.columns.tolist()[1:]
+
+
+    def get_dates(self):
+            return self.dates
 
 
     def __len__(self):
@@ -101,6 +108,7 @@ class Forex_test_Dataset(Dataset):
         
         # read CSV dataset and change it to torch.tensor type
         self.dataset_csv = pd.read_csv(csv_file, encoding="UTF=8")
+        # remove date from dataset in order to prepare data for test
         self.dataset = torch.tensor(self.dataset_csv.values[:,1:].tolist())
         
         # get train samples from the dataset and set it again to the dataset
@@ -109,6 +117,8 @@ class Forex_test_Dataset(Dataset):
         self.dataset = self.dataset[int(len_dataset * self.train_size_ratio):, :]
         # print(len(self.dataset))
 
+        # get dates for plotting candles if it is neccessary 
+        self.dates = self.dataset_csv.values[int(len_dataset * self.train_size_ratio):, 0].tolist()
 
         # normalize dataset based on its features.
         for i in range(self.dataset.shape[1] -4):   # -4 is for just normalizing input features
@@ -123,7 +133,11 @@ class Forex_test_Dataset(Dataset):
         """
         return(len(self.dataset))
 
-    
+
+    def get_dates(self):
+            return self.dates
+
+
     def __getitem__(self, index):
         """
             return samples based on index and sequence length.

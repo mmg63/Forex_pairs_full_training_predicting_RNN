@@ -1,8 +1,12 @@
+import pandas as pd
 import matplotlib.pyplot as plt
 from parameters import *
 import torch
 import numpy as np
 import parameters
+import mplfinance as mpf
+
+
 plt.ion()
 
 
@@ -21,9 +25,9 @@ def plot_acc_loss(data:list, caption):
     plt.pause(20)
 
 
-def plot_test_values_predicted(real_values:list,predicted_values:list,  caption_for_real_values, caption_for_predicted_values):
+def plot_test_values_predicted(real_values:list, predicted_values:list,  caption_for_real_values, caption_for_predicted_values):
     # Plot figure
-    plt.figure(figsize=(10,5))
+    plt.figure(figsize=(10,5),)
     plt.title("Real test and predicted values")
     # plt.plot(data, label="val")
     plt.plot(real_values, label=caption_for_real_values)
@@ -32,7 +36,6 @@ def plot_test_values_predicted(real_values:list,predicted_values:list,  caption_
     plt.ylabel("Close Price")
     plt.legend(["Real price","Predicted price"])
     plt.show()
-
 
 
 def plot_price(price_list):
@@ -71,3 +74,16 @@ def save_model(model_Open, model_High, model_Low, model_Close,
                     }
     model_state_dict_path = parameters.model_state_dict_path
     torch.save(state_dicts, model_state_dict_path)
+
+def plot_price_chart(prices):
+    # source_csv = pd.read_csv(reader=model_state_dict_path, encoding="UTF8")
+    
+    # candles = pd.read_csv(dataset_filePath,index_col=0,parse_dates=True)
+    # dates = candles.values[int(len(candles) * 0.8):, 0].tolist()
+    candles = pd.DataFrame(prices).transpose()
+    candles.columns = ['Date', 'Open', 'High', 'Low', 'Close']
+    candles['Date'] = pd.to_datetime(candles['Date'])
+    # candles.index.name = 'Date'
+    mpf.plot(candles)
+    print("end plot chart")
+    
