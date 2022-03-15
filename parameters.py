@@ -26,7 +26,7 @@ load_model = False
 
 # model tuning parameters
 lr = 0.001  # learning rate
-epochs = 100
+epochs = 200
 
 
 loss = 0

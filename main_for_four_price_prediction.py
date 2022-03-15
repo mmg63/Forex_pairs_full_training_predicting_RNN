@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 # from custom_dataset import Forex_Dataset
 from custom_dataset_train_test_split import Forex_train_Dataset, Forex_test_Dataset
 from torch.utils.data import DataLoader
-from parameters_for_four_price_prediction import *
+from parameters import *
 from time import time
 from extended_functions_full_candlestick import *
 
