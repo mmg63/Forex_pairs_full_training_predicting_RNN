@@ -105,9 +105,9 @@ class Forex_test_Dataset(Dataset):
         
         # get train samples from the dataset and set it again to the dataset
         len_dataset = len(self.dataset)
-        print(len_dataset)
+        # print(len_dataset)
         self.dataset = self.dataset[int(len_dataset * self.train_size_ratio):, :]
-        print(len(self.dataset))
+        # print(len(self.dataset))
 
 
         # normalize dataset based on its features.

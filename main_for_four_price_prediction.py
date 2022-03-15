@@ -101,7 +101,7 @@ if load_model:
     # loading model and set parameters
     checkpoint = torch.load(model_state_dict_path)
     model_Open.load_state_dict(checkpoint["model_Open_state_dict"])
-    model_High.load_state_dict(checkpoint["model_High_state_dict"])
+    model_High.load_state_dict(checkpoint["model_Hight_state_dict"])
     model_Low.load_state_dict(checkpoint["model_Low_state_dict"])
     model_Close.load_state_dict(checkpoint["model_Close_state_dict"])
     optimizer_Open.load_state_dict(checkpoint["optimizer_Open_state_dict"])
@@ -115,7 +115,7 @@ if load_model:
     loss_close = checkpoint["loss_Close"]
 
     print("epoc : {}, loss_Open : {}, loss_High : {}, loss_Low : {}, loss_Close : {}"
-        .format(epoch, loss_Open.item(), loss_High.item(), loss_Low.item(), loss_Close.item()))
+        .format(epoch, loss_Open, loss_High, loss_Low, loss_Close))
     
 else:
     model_Open.train()
@@ -202,26 +202,38 @@ print(f"length of the dataset is {len(test_dataset)}")
 # load dataset based on days and its followed weekdays
 test_loader = DataLoader(test_dataset, batch_size=dataloader_batch_size, 
                         shuffle=False, drop_last=True, ) 
-test_batches = iter(loader)
-test_value = []
+test_value_Open = []
+test_value_High = []
+test_value_Low = []
+test_value_Close = []
+
 test_Pred_Open = []
 test_Pred_High = []
 test_Pred_Low = []
 test_Pred_Close = []
+
+test_batches = iter(loader)
 for batch_idx in range(len(test_loader)-4):
-    samples, target = next(test_batches)
+    samples, target_Open, target_High, target_Low, target_Close = next(test_batches)
     _, _, y_pred_Open = model_Open(samples)
     _, _, y_pred_High = model_High(samples)
     _, _, y_pred_Low = model_Low(samples)
     _, _, y_pred_Close = model_Close(samples)
-    test_value.append(target)
+    
+    test_value_Open.append(target_Open)
+    test_value_High.append(target_High)
+    test_value_Low.append(target_Low)
+    test_value_Close.append(target_Close)
     
     test_Pred_Open.append(y_pred_Open.item())
     test_Pred_High.append(y_pred_High.item())
     test_Pred_Low.append(y_pred_Low.item())
     test_Pred_Close.append(y_pred_Close.item())
 
-plot_test_values_predicted(test_value[-11:], test_Pred_Close[-10:],"test real value", "test predicted value" )
+plot_test_values_predicted(test_value_Open[-11:], test_Pred_Open[-10:],"test real value", "test predicted value" )
+plot_test_values_predicted(test_value_High[-11:], test_Pred_High[-10:],"test real value", "test predicted value" )
+plot_test_values_predicted(test_value_Low[-11:], test_Pred_Low[-10:],"test real value", "test predicted value" )
+plot_test_values_predicted(test_value_Close[-11:], test_Pred_Close[-10:],"test real value", "test predicted value" )
 # plot_test_values_predicted(test_value, test_acc[1:],"test real value", "test predicted value" )
 
 # plot_acc_loss(test_acc, "test predicted value")
