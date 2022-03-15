@@ -175,8 +175,8 @@ else:
             save_model(model_Open, model_High, model_Low, model_Close, 
                         optimizer_Open, optimizer_High, optimizer_Low, optimizer_Close,
                         epoch, loss_Open, loss_High, loss_Low, loss_Close)
-            print("epoc : {}, loss_Open : {}, loss_High : {}, loss_Low : {}, loss_Close : {}"
-                    .format(epoch, loss_Open.item(), loss_High.item(), loss_Low.item(), loss_Close.item()))
+            print("epoc : {}, loss_Open : {}, loss_High : {}, loss_Low : {}, loss_Close : {}, at epoch teime of {}"
+                    .format(epoch, loss_Open, loss_High, loss_Low, loss_Close, (time_end - time_satrt)))
         
         if (epoch == epochs - 1):
             save_model(model_Open, model_High, model_Low, model_Close, 

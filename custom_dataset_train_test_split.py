@@ -42,7 +42,7 @@ class Forex_train_Dataset(Dataset):
 
 
         # normalize dataset based on its features.
-        for i in range(self.dataset.shape[1] -1):
+        for i in range(self.dataset.shape[1] -4):   # -4 is for just normalizing input features
             self.dataset[:,i] = (self.dataset[:,i] - self.dataset[:,i].mean()) / self.dataset[:,i].std()
         # get headers of dataset without timestamp colums,the first columns.
         self.headers = self.dataset_csv.columns.tolist()[1:]
@@ -111,7 +111,7 @@ class Forex_test_Dataset(Dataset):
 
 
         # normalize dataset based on its features.
-        for i in range(self.dataset.shape[1] -1):
+        for i in range(self.dataset.shape[1] -4):   # -4 is for just normalizing input features
             self.dataset[:,i] = (self.dataset[:,i] - self.dataset[:,i].mean()) / self.dataset[:,i].std()
         # get headers of dataset without timestamp colums,the first columns.
         self.headers = self.dataset_csv.columns.tolist()[1:]
