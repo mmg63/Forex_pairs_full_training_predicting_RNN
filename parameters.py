@@ -1,7 +1,7 @@
 import torch
 
 # dataset parameters
-dataset_filePath = "EURUSD_DATASET/EURUSD_1.02.2007_26.02.2022_copy.csv"
+dataset_filePath = "EURUSD_DATASET/EURUSD_1.02.2007_26.02.2022_Full_prediction.csv"
 rnn_sequence_length = 5
 dataloader_batch_size = 1  # should be equal to batch_size in model parameters
 train_size_ratio = 0.8
