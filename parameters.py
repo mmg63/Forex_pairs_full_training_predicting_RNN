@@ -8,7 +8,7 @@ train_size_ratio = 0.8
 test_size_ratio = 0.2
 
 # model parameters
-rnn_architecture = "LSTM"  # RNN LSTM GRU
+rnn_architecture = "RNN"  # RNN LSTM GRU
 # batch_size = 1
 input_size = 6
 sequence_length = 5
@@ -26,7 +26,7 @@ load_model = False
 
 # model tuning parameters
 lr = 0.001  # learning rate
-epochs = 200
+epochs = 100
 
 
 loss = 0

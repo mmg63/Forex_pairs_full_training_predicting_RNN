@@ -114,15 +114,15 @@ if load_model:
     loss_Low = checkpoint["loss_Low"]
     loss_close = checkpoint["loss_Close"]
 
-    print("epoc : {}, loss :{}".format(epoch, loss_Open))
-    print("epoc : {}, loss :{}".format(epoch, loss_High))
-    print("epoc : {}, loss :{}".format(epoch, loss_Low))
-    print("epoc : {}, loss :{}".format(epoch, loss_Close))
+    print("epoc : {}, loss_Open : {}, loss_High : {}, loss_Low : {}, loss_Close : {}"
+        .format(epoch, loss_Open.item(), loss_High.item(), loss_Low.item(), loss_Close.item()))
+    
 else:
     model_Open.train()
     model_High.train()
     model_Close.train()
     model_Low.train()
+    
     for epoch in range(epochs):
         # tracking time with time moodule.
         time_satrt = time()
@@ -141,10 +141,12 @@ else:
         batches = iter(loader)
         for batch_idx in range(len(loader)-4):
             samples, target_Open, target_High, target_Low, target_Close = next(batches)
-            h1, h2, y_hat_Open = model_Open(samples)
-            h1, h2, y_hat_High = model_High(samples)
-            h1, h2, y_hat_Low = model_Low(samples)
-            h1, h2, y_hat_Close = model_Close(samples)
+            
+            _, _, y_hat_Open = model_Open(samples)
+            _, _, y_hat_High = model_High(samples)
+            _, _, y_hat_Low = model_Low(samples)
+            _, _, y_hat_Close = model_Close(samples)
+
             loss_Open += criterion_Open(y_hat_Open, target_Open)
             loss_High += criterion_High(y_hat_High, target_High)
             loss_Low += criterion_Low(y_hat_Low, target_Low)
@@ -155,11 +157,13 @@ else:
         train_loss_High.append(loss_High.item())
         train_loss_Low.append(loss_Low.item())
         train_loss_Close.append(loss_Close.item())
+
         # calculate backpropagation and optimize losses 
         loss_Open.backward()
         loss_High.backward()
         loss_Low.backward()
         loss_Close.backward()
+
         optimizer_Open.step()
         optimizer_High.step()
         optimizer_Low.step()
@@ -171,10 +175,8 @@ else:
             save_model(model_Open, model_High, model_Low, model_Close, 
                         optimizer_Open, optimizer_High, optimizer_Low, optimizer_Close,
                         epoch, loss_Open, loss_High, loss_Low, loss_Close)
-            print(f'epoch: {epoch}, time: %.4f , loss_Open: %.4f' % ((time_end - time_satrt), loss_Open.item()))
-            print(f'epoch: {epoch}, time: %.4f , loss_High: %.4f' % ((time_end - time_satrt), loss_High.item()))
-            print(f'epoch: {epoch}, time: %.4f , loss_Low: %.4f' % ((time_end - time_satrt), loss_Low.item()))
-            print(f'epoch: {epoch}, time: %.4f , loss_Close: %.4f' % ((time_end - time_satrt), loss_Close.item()))
+            print("epoc : {}, loss_Open : {}, loss_High : {}, loss_Low : {}, loss_Close : {}"
+                    .format(epoch, loss_Open.item(), loss_High.item(), loss_Low.item(), loss_Close.item()))
         
         if (epoch == epochs - 1):
             save_model(model_Open, model_High, model_Low, model_Close, 

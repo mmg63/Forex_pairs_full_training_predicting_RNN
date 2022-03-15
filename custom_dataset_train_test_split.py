@@ -60,8 +60,9 @@ class Forex_train_Dataset(Dataset):
             return samples based on index and sequence length.
             `return type`: torch.tensor
         """
+        # print(f"samples: {self.dataset[index + self.seq_len - 1,:]}")
 
-        samples = self.dataset[index : index + self.seq_len,:-5]
+        samples = self.dataset[index : index + self.seq_len,:-4]
         # try to find the `close price` of the next day 
         target_Open = self.dataset[index + self.seq_len - 1, -4]
         target_High = self.dataset[index + self.seq_len - 1, -3]
