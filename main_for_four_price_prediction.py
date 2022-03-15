@@ -109,10 +109,10 @@ if load_model:
     optimizer_Low.load_state_dict(checkpoint["optimizer_Low_state_dict"])
     optimizer_Close.load_state_dict(checkpoint["optimizer_Close_state_dict"])
     epoch = checkpoint["epoch"]
-    loss = checkpoint["loss_Open"]
-    loss = checkpoint["loss_High"]
-    loss = checkpoint["loss_Low"]
-    loss = checkpoint["loss_Close"]
+    loss_Open = checkpoint["loss_Open"]
+    loss_High = checkpoint["loss_High"]
+    loss_Low = checkpoint["loss_Low"]
+    loss_close = checkpoint["loss_Close"]
 
     print("epoc : {}, loss :{}".format(epoch, loss_Open))
     print("epoc : {}, loss :{}".format(epoch, loss_High))
@@ -140,15 +140,15 @@ else:
         # feed whole samples into the model
         batches = iter(loader)
         for batch_idx in range(len(loader)-4):
-            samples, target = next(batches)
+            samples, target_Open, target_High, target_Low, target_Close = next(batches)
             h1, h2, y_hat_Open = model_Open(samples)
             h1, h2, y_hat_High = model_High(samples)
             h1, h2, y_hat_Low = model_Low(samples)
             h1, h2, y_hat_Close = model_Close(samples)
-            loss_Open += criterion_Open(y_hat_Open, target)
-            loss_High += criterion_High(y_hat_High, target)
-            loss_Low += criterion_Low(y_hat_Low, target)
-            loss_Close += criterion_Close(y_hat_Close, target)
+            loss_Open += criterion_Open(y_hat_Open, target_Open)
+            loss_High += criterion_High(y_hat_High, target_High)
+            loss_Low += criterion_Low(y_hat_Low, target_Low)
+            loss_Close += criterion_Close(y_hat_Close, target_Close)
         
         # append losses for plot
         train_loss_Open.append(loss_Open.item())
