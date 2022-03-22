@@ -25,7 +25,7 @@ class MyRNN(nn.Module):
     def __init__(self, 
                 rnn_architecture="RNN", 
                 input_size:int = 1, 
-                seq_length:int = 5,
+                seq_length:int = 4,
                 batch_size:int = 32,
                 first_stack_hidden_size:int = 128,
                 last_stack_hidden_size:int = 64,
@@ -58,7 +58,7 @@ class MyRNN(nn.Module):
         self.num_outputs = num_outputs
         self.rnn_activation_function = rnn_activation_function
         self.embed_act_func = embed_activation_function
-    
+
 
         if rnn_architecture == "RNN":
             self.first_rnn_layer = RNN(input_size=self.num_features, 
