@@ -46,7 +46,11 @@ class Forex_train_Dataset(Dataset):
 
         # normalize dataset based on its features.
         for i in range(self.dataset.shape[1] -4):   # -4 is for just normalizing input features
-            self.dataset[:,i] = (self.dataset[:,i] - self.dataset[:,i].mean()) / self.dataset[:,i].std()
+            # self.dataset[:,i] = (self.dataset[:,i] - self.dataset[:,i].mean()) / self.dataset[:,i].std()
+            # Normalize features from 0 to 1
+            self.dataset[:, i] -= self.dataset[:, i].min()
+            self.dataset[:, i] /= self.dataset[:, i].max()
+
         # get headers of dataset without timestamp colums,the first columns.
         self.headers = self.dataset_csv.columns.tolist()[1:]
 
@@ -71,15 +75,15 @@ class Forex_train_Dataset(Dataset):
 
         samples = self.dataset[index : index + self.seq_len,:-4]
         # try to find the `close price` of the next day 
-        target_Open = self.dataset[index + self.seq_len - 1, -4]
-        target_High = self.dataset[index + self.seq_len - 1, -3]
-        target_Low = self.dataset[index + self.seq_len - 1, -2]
+        # target_Open = self.dataset[index + self.seq_len - 1, -4]
+        # target_High = self.dataset[index + self.seq_len - 1, -3]
+        # target_Low = self.dataset[index + self.seq_len - 1, -2]
         target_Close = self.dataset[index + self.seq_len - 1, -1]
         
         # return super().__getitem__(index)
         # print(f"samples:\n {samples}")
         # print(f"target:\n {target}")
-        return samples, target_Open, target_High, target_Low, target_Close 
+        return samples, target_Close  #target_Open, target_High, target_Low, target_Close 
     
     def header(self):
         """
@@ -114,7 +118,7 @@ class Forex_test_Dataset(Dataset):
         # get train samples from the dataset and set it again to the dataset
         len_dataset = len(self.dataset)
         # print(len_dataset)
-        self.dataset = self.dataset[int(len_dataset * self.train_size_ratio):, :]
+        # self.dataset = self.dataset[int(len_dataset * self.train_size_ratio):, :]
         # print(len(self.dataset))
 
         # get dates for plotting candles if it is neccessary 
@@ -122,7 +126,11 @@ class Forex_test_Dataset(Dataset):
 
         # normalize dataset based on its features.
         for i in range(self.dataset.shape[1] -4):   # -4 is for just normalizing input features
-            self.dataset[:,i] = (self.dataset[:,i] - self.dataset[:,i].mean()) / self.dataset[:,i].std()
+            # self.dataset[:,i] = (self.dataset[:,i] - self.dataset[:,i].mean()) / self.dataset[:,i].std()
+            # Normalize features from 0 to 1
+            self.dataset[:, i] -= self.dataset[:, i].min()
+            self.dataset[:, i] /= self.dataset[:, i].max()
+
         # get headers of dataset without timestamp colums,the first columns.
         self.headers = self.dataset_csv.columns.tolist()[1:]
 
@@ -144,17 +152,17 @@ class Forex_test_Dataset(Dataset):
             `return type`: torch.tensor
         """
 
-        samples = self.dataset[index : index + self.seq_len,:-5]
+        samples = self.dataset[index : index + self.seq_len,:-4]
         # try to find the `close price` of the next day 
-        target_Open = self.dataset[index + self.seq_len - 1, -4]
-        target_High = self.dataset[index + self.seq_len - 1, -3]
-        target_Low = self.dataset[index + self.seq_len - 1, -2]
+        # target_Open = self.dataset[index + self.seq_len - 1, -4]
+        # target_High = self.dataset[index + self.seq_len - 1, -3]
+        # target_Low = self.dataset[index + self.seq_len - 1, -2]
         target_Close = self.dataset[index + self.seq_len - 1, -1]
         
         # return super().__getitem__(index)
         # print(f"samples:\n {samples}")
         # print(f"target:\n {target}")
-        return samples, target_Open, target_High, target_Low, target_Close 
+        return samples,target_Close  # target_Open, target_High, target_Low, target_Close 
     
     def header(self):
         """

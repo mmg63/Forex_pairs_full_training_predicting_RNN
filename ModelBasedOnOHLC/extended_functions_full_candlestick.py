@@ -15,7 +15,7 @@ def plot_acc_loss(data:list, caption):
     plt.figure(figsize=(10,5))
     plt.title(f"Training and Validation Loss with lr = {lr}")
     # plt.plot(data, label="val")
-    plt.yticks(np.arange(0, 2, step=0.001))
+    plt.yticks(np.arange(0, 1, step=0.001))
     plt.plot(data, label=caption)
     plt.xlabel("iterations")
     plt.ylabel("Loss")
@@ -30,6 +30,7 @@ def plot_test_values_predicted(real_values:list, predicted_values:list,  caption
     plt.figure(figsize=(10,5),)
     plt.title("Real test and predicted values")
     # plt.plot(data, label="val")
+    plt.grid()
     plt.plot(real_values, label=caption_for_real_values)
     plt.plot(predicted_values, label=caption_for_predicted_values)
     plt.xlabel("Days")
@@ -74,6 +75,22 @@ def save_model(model_Open, model_High, model_Low, model_Close,
                     }
     model_state_dict_path = parameters.model_state_dict_path
     torch.save(state_dicts, model_state_dict_path)
+
+
+# saving model parameters
+def save_single_model(model_Close, 
+                Optimizer_Close,
+                epoch, 
+                loss_Close):
+    state_dicts = {
+                    'model_Close_state_dict': model_Close.state_dict(),
+                    'optimizer_Close_state_dict': Optimizer_Close.state_dict(), 
+                    'epoch': epoch, 
+                    'loss_Close': loss_Close
+                    }
+    model_state_dict_path = parameters.model_state_dict_path
+    torch.save(state_dicts, model_state_dict_path)
+
 
 def plot_price_chart(prices):
     # source_csv = pd.read_csv(reader=model_state_dict_path, encoding="UTF8")
