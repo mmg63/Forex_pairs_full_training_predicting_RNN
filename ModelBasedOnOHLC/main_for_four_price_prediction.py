@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 from custom_dataset_train_test_split import Forex_train_Dataset, Forex_test_Dataset
 from torch.utils.data import DataLoader
 from parameters import *
-from time import time
+from time import time, ctime
 from extended_functions_full_candlestick import *
 import mplfinance as mpl
 
@@ -245,7 +245,7 @@ dates = candles.values[int(len(candles) * 0.8):, 0].tolist()
 # plot_test_values_predicted(test_value_Low, test_Pred_Low,"test real value", "test predicted value" )
 plot_test_values_predicted(test_value_Close, test_Pred_Close,"test real value", "test predicted value" )
 # plot_test_values_predicted(test_value, test_acc[1:],"test real value", "test predicted value" )
-
+plt.savefig(f"ModelBasedOnOHLC/plot/test_close_at_{ctime()}", dpi=300)
 
 # plot_acc_loss(test_acc, "test predicted value")
 # plot_acc_loss(test_value, "test real value")
