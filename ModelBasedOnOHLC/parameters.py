@@ -1,5 +1,6 @@
 import torch
 
+
 # dataset parameters
 dataset_filePath = "ModelBasedOnOHLC/EURUSD_DATASET/EURUSD_No_Volume_Buy.csv"
 rnn_sequence_length = 5
@@ -21,7 +22,7 @@ embedding_act_func = torch.relu # Linear activation function: None otherwise: to
 
 # saving model or loading it
 model_state_dict_path = f"ModelBasedOnOHLC/model_parameters/model_with_general_checkpoint_{rnn_architecture}"
-load_model = True
+load_model = False
 
 
 # model tuning parameters

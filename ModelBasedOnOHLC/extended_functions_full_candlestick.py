@@ -5,7 +5,7 @@ import torch
 import numpy as np
 import parameters
 import mplfinance as mpf
-
+from time import ctime
 
 plt.ion()
 
