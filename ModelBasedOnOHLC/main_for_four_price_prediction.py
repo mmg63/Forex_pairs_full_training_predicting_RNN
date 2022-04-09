@@ -11,7 +11,7 @@ from time import time, ctime
 from extended_functions_full_candlestick import *
 import mplfinance as mpl
 
-
+torch.manual_seed(1001)
 
 # create an object from the model and define optimizers and backpropagation functions
 model_Open = MyRNN(rnn_architecture=rnn_architecture, 
