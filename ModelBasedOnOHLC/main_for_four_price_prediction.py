@@ -12,6 +12,7 @@ from extended_functions_full_candlestick import *
 import mplfinance as mpl
 
 
+
 # create an object from the model and define optimizers and backpropagation functions
 model_Open = MyRNN(rnn_architecture=rnn_architecture, 
                 batch_size=dataloader_batch_size, 
