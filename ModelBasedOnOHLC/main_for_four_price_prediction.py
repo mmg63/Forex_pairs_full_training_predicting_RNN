@@ -11,9 +11,8 @@ from time import time, ctime
 from extended_functions_full_candlestick import *
 import mplfinance as mpl
 
-torch.manual_seed(1001)
-
 # create an object from the model and define optimizers and backpropagation functions
+torch.manual_seed(int(time()))
 model_Open = MyRNN(rnn_architecture=rnn_architecture, 
                 batch_size=dataloader_batch_size, 
                 input_size=input_size, 
@@ -24,6 +23,7 @@ model_Open = MyRNN(rnn_architecture=rnn_architecture,
                 last_stack_hidden_size=last_hidden_size, 
                 rnn_activation_function=rnn_act_func
             )
+torch.manual_seed(int(time()))
 model_High = MyRNN(rnn_architecture=rnn_architecture, 
                 batch_size=dataloader_batch_size, 
                 input_size=input_size, 
@@ -34,6 +34,7 @@ model_High = MyRNN(rnn_architecture=rnn_architecture,
                 last_stack_hidden_size=last_hidden_size, 
                 rnn_activation_function=rnn_act_func
             )
+torch.manual_seed(int(time()))
 model_Low = MyRNN(rnn_architecture=rnn_architecture, 
                 batch_size=dataloader_batch_size, 
                 input_size=input_size, 
@@ -44,6 +45,7 @@ model_Low = MyRNN(rnn_architecture=rnn_architecture,
                 last_stack_hidden_size=last_hidden_size, 
                 rnn_activation_function=rnn_act_func
             )
+torch.manual_seed(int(time()))
 model_Close = MyRNN(rnn_architecture=rnn_architecture, 
                 batch_size=dataloader_batch_size, 
                 input_size=input_size, 
@@ -219,6 +221,7 @@ test_Pred_Close = []
 test_batches = iter(test_loader)
 for batch_idx in range(len(test_loader)-4):
     # samples, target_Close = next(test_batches)
+
     samples, target_Open, target_High, target_Low, target_Close = next(test_batches)
     _, _, y_pred_Open = model_Open(samples)
     _, _, y_pred_High = model_High(samples)

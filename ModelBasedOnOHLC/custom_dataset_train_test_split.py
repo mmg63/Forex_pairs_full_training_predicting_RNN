@@ -152,7 +152,7 @@ class Forex_test_Dataset(Dataset):
             `return type`: torch.tensor
         """
 
-        # samples = self.dataset[index : index + self.seq_len,:-4]
+        samples = self.dataset[index : index + self.seq_len,:-4]
         # try to find the `close price` of the next day 
         target_Open = self.dataset[index + self.seq_len - 1, -4]
         target_High = self.dataset[index + self.seq_len - 1, -3]
@@ -162,7 +162,7 @@ class Forex_test_Dataset(Dataset):
         # return super().__getitem__(index)
         # print(f"samples:\n {samples}")
         # print(f"target:\n {target}")
-        return target_Open, target_High, target_Low, target_Close 
+        return samples, target_Open, target_High, target_Low, target_Close 
     
     def header(self):
         """
