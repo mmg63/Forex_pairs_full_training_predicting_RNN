@@ -22,7 +22,7 @@ embedding_act_func = torch.relu # Linear activation function: None otherwise: to
 
 # saving model or loading it
 model_state_dict_path = f"ModelBasedOnOHLC/model_parameters/model_with_general_checkpoint_{rnn_architecture}"
-load_model = False
+load_model = True
 
 
 # model tuning parameters
