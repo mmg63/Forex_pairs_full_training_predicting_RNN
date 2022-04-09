@@ -25,7 +25,11 @@ def plot_acc_loss(data:list, caption):
     plt.pause(20)
 
 
-def plot_test_values_predicted(real_values:list, predicted_values:list,  caption_for_real_values, caption_for_predicted_values):
+def plot_test_values_predicted(real_values:list, 
+                                predicted_values:list,  
+                                caption_for_real_values, 
+                                caption_for_predicted_values,
+                                y_label="Close Price"):
     # Plot figure
     plt.figure(figsize=(10,5),)
     plt.title("Real test and predicted values")
@@ -34,7 +38,7 @@ def plot_test_values_predicted(real_values:list, predicted_values:list,  caption
     plt.plot(real_values, label=caption_for_real_values)
     plt.plot(predicted_values, label=caption_for_predicted_values)
     plt.xlabel("Days")
-    plt.ylabel("Close Price")
+    plt.ylabel(y_label)
     plt.legend(["Real price","Predicted price"])
     plt.show()
 
