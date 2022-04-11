@@ -238,14 +238,8 @@ for batch_idx in range(len(test_loader)-4):
     test_Pred_Low.append(y_pred_Low.item())
     test_Pred_Close.append(y_pred_Close.item())
 
-# preparing data for plot in candlestick manner
-price_dates = test_dataset.get_dates()
-candles = pd.read_csv(dataset_filePath, index_col=0, parse_dates=True)
-dates = candles.values[int(len(candles) * 0.8):, 0].tolist()
-# plot_price_chart([dates, test_Pred_Open, test_Pred_High, test_Pred_Low, test_Pred_Close])
 # plot test prices as cangles
 predicted_price_to_csv(test_Pred_Open, test_Pred_High, test_Pred_Low, test_Pred_Close, plot_chart=True)
-
 
 # plot_test_values_predicted(test_value_Open, test_Pred_Open,"test real value", "test predicted value", y_label="Open Value")
 # # plt.savefig(f"ModelBasedOnOHLC/plot/Open_at_{ctime()}", dpi=300)
