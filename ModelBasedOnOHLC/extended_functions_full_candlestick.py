@@ -110,6 +110,8 @@ def plot_price_chart(prices):
 
 def convert_list_to_csv(open,high,low,close):
     prices = [open, high, low, close]
+    
+    prices = torch.tensor(prices).T
     datelist = pd.date_range(datetime.today().date(), periods=100).tolist()
     pass
 
