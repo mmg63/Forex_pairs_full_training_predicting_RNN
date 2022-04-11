@@ -125,5 +125,5 @@ def predicted_price_to_csv(open, high, low, close, plot_chart:Boolean=True):
     chart_info.to_csv(working_dir+'chart_info.csv', encoding='utf-8')
 
     if plot_chart:
-        mpl.plot(chart_info,type='candle')  #), show_nontrading=False)
+        mpl.plot(chart_info,type='candle', style='charles')  #), show_nontrading=False)
     print("the end.")
