@@ -1,12 +1,14 @@
+from xmlrpc.client import Boolean
 import pandas as pd
 import matplotlib.pyplot as plt
 from parameters import *
+import parameters
 import torch
 import numpy as np
-import parameters
-import mplfinance as mpf
+import mplfinance as mpl
 from time import ctime
 from datetime import datetime, date
+
 plt.ion()
 
 
@@ -97,26 +99,31 @@ def save_single_model(model_Close,
 
 
 def plot_price_chart(prices):
-    # source_csv = pd.read_csv(reader=model_state_dict_path, encoding="UTF8")
-    # candles = pd.read_csv(dataset_filePath,index_col=0,parse_dates=True)
-    # dates = candles.values[int(len(candles) * 0.8):, 0].tolist()
-    candles = pd.DataFrame(prices).transpose()
-    candles.columns = ['Date', 'Open', 'High', 'Low', 'Close']
-    candles['Date'] = pd.to_datetime(candles['Date'])
-    # candles.index.name = 'Date'
-    mpf.plot(candles)
-    print("end plot chart")
-
-
-def convert_list_to_csv(open,high,low,close):
-    prices = [open, high, low, close]
     
-    prices = torch.tensor(prices).T
-    datelist = pd.date_range(datetime.today().date(), periods=100).tolist()
-    pass
+    daily = pd.read_csv('chart.csv', index_col=0, parse_dates=True)
+    daily.index.name = 'Date'
+
+    mpl.plot(daily,type='candle', show_nontrading=True)
 
 
 def date_range(start_date, end_date):
     # start="2020-01-01", end="2020-02-01"
     pd.date_range(start=start_date, end=end_date)
+
+
+def predicted_price_to_csv(open, high, low, close, plot_chart:Boolean=True):
+    prices = [open, high, low, close]
+    prices = torch.tensor(prices).T
+    prices = pd.DataFrame(prices, columns=['Open','High','Low','Close'])
+    datelist = pd.DataFrame(pd.date_range(datetime(2007,2,1).date(), periods=5519).tolist(),columns=['Date'])
+    date_start = datetime(2007,2,1).date()
+    chart_info = pd.concat([datelist, prices], axis=1)
+    chart_info = chart_info.set_index('Date')
     
+    # pd.DataFrame.columns=['Dates','Open','High','Low','Close']
+    # save_chart prices and datelists to the csv file
+    chart_info.to_csv(working_dir+'chart_info.csv', encoding='utf-8')
+
+    if plot_chart:
+        mpl.plot(chart_info,type='candle')  #), show_nontrading=False)
+    print("the end.")

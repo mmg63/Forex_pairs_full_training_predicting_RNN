@@ -243,20 +243,19 @@ price_dates = test_dataset.get_dates()
 candles = pd.read_csv(dataset_filePath, index_col=0, parse_dates=True)
 dates = candles.values[int(len(candles) * 0.8):, 0].tolist()
 # plot_price_chart([dates, test_Pred_Open, test_Pred_High, test_Pred_Low, test_Pred_Close])
-convert_list_to_csv(test_Pred_Open, test_Pred_High, test_Pred_Low, test_Pred_Close)
+# plot test prices as cangles
+predicted_price_to_csv(test_Pred_Open, test_Pred_High, test_Pred_Low, test_Pred_Close, plot_chart=True)
 
 
-plot_test_values_predicted(test_value_Open, test_Pred_Open,"test real value", "test predicted value", y_label="Open Value")
-# plt.savefig(f"ModelBasedOnOHLC/plot/Open_at_{ctime()}", dpi=300)
-plot_test_values_predicted(test_value_High, test_Pred_High,"test real value", "test predicted value", y_label="High Value" )
-# plt.savefig(f"ModelBasedOnOHLC/plot/High_at_{ctime()}", dpi=300)
-plot_test_values_predicted(test_value_Low, test_Pred_Low,"test real value", "test predicted value", y_label="Low Value" )
-# plt.savefig(f"ModelBasedOnOHLC/plot/Low_at_{ctime()}", dpi=300)
-plot_test_values_predicted(test_value_Close, test_Pred_Close,"test real value", "test predicted value", y_label="Close Value" )
+# plot_test_values_predicted(test_value_Open, test_Pred_Open,"test real value", "test predicted value", y_label="Open Value")
+# # plt.savefig(f"ModelBasedOnOHLC/plot/Open_at_{ctime()}", dpi=300)
+# plot_test_values_predicted(test_value_High, test_Pred_High,"test real value", "test predicted value", y_label="High Value" )
+# # plt.savefig(f"ModelBasedOnOHLC/plot/High_at_{ctime()}", dpi=300)
+# plot_test_values_predicted(test_value_Low, test_Pred_Low,"test real value", "test predicted value", y_label="Low Value" )
+# # plt.savefig(f"ModelBasedOnOHLC/plot/Low_at_{ctime()}", dpi=300)
+# plot_test_values_predicted(test_value_Close, test_Pred_Close,"test real value", "test predicted value", y_label="Close Value" )
 # plt.savefig(f"ModelBasedOnOHLC/plot/Close_at_{ctime()}", dpi=300)
 
-# plot_acc_loss(test_acc, "test predicted value")
-# plot_acc_loss(test_value, "test real value")
 
 print("The end.")
 

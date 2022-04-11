@@ -2,6 +2,7 @@ import torch
 
 
 # dataset parameters
+working_dir = './ModelBasedOnOHLC/'
 dataset_filePath = "ModelBasedOnOHLC/EURUSD_DATASET/EURUSD_No_Volume_Buy.csv"
 rnn_sequence_length = 5
 dataloader_batch_size = 1  # should be equal to batch_size in model parameters
