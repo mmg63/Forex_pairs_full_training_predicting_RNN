@@ -13,7 +13,7 @@ test_size_ratio = 0.2
 rnn_architecture = "LSTM"  # RNN LSTM GRU
 # batch_size = 1
 input_size = 4  # number of features in every samples
-sequence_length = 5
+sequence_length = 5  #aggregation 
 first_hidden_size = 128
 last_hidden_size = 64
 num_output = 1
@@ -23,7 +23,7 @@ embedding_act_func = torch.relu # Linear activation function: None otherwise: to
 
 # saving model or loading it
 model_state_dict_path = f"ModelBasedOnOHLC/model_parameters/model_with_general_checkpoint_{rnn_architecture}"
-load_model = False
+load_model = True
 
 
 # model tuning parameters
