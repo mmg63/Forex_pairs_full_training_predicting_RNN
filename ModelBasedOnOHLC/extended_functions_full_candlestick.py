@@ -8,6 +8,7 @@ import numpy as np
 import mplfinance as mpl
 from time import ctime
 from datetime import datetime, date
+import plotly.graph_objects as go
 
 plt.ion()
 
@@ -125,5 +126,18 @@ def predicted_price_to_csv(open, high, low, close, plot_chart:Boolean=True):
     chart_info.to_csv(working_dir+'chart_info.csv', encoding='utf-8')
 
     if plot_chart:
-        mpl.plot(chart_info,type='candle', style='charles')  #), show_nontrading=False)
+        mpl.plot(chart_info[-50:],type='candle', style='charles')  #), show_nontrading=False)
+
+        candlestick = go.Candlestick(
+                            x=chart_info.index,
+                            open=chart_info['Open'],
+                            high=chart_info['High'],
+                            low=chart_info['Low'],
+                            close=chart_info['Close']
+                            )
+
+        fig = go.Figure(data=[candlestick])
+
+        fig.show()
+
     print("the end.")
