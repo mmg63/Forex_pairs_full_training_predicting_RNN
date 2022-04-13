@@ -43,7 +43,7 @@ def plot_test_values_predicted(real_values:list,
     plt.xlabel("Days")
     plt.ylabel(y_label)
     plt.legend(["Real price","Predicted price"])
-    plt.show()
+    # plt.show()
 
 
 def plot_price(price_list):

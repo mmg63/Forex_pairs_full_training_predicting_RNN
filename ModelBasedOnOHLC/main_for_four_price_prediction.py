@@ -239,17 +239,17 @@ for batch_idx in range(len(test_loader)-4):
     test_Pred_Close.append(y_pred_Close.item())
 
 # plot test prices as cangles
-predicted_price_to_csv(test_Pred_Open, test_Pred_High, test_Pred_Low, test_Pred_Close, plot_chart=True)
+# predicted_price_to_csv(test_Pred_Open, test_Pred_High, test_Pred_Low, test_Pred_Close, plot_chart=True)
 
-# plot_test_values_predicted(test_value_Open, test_Pred_Open,"test real value", "test predicted value", y_label="Open Value")
+plot_test_values_predicted(test_value_Open, test_Pred_Open,"test real value", "test predicted value", y_label="Open Value")
 # # plt.savefig(f"ModelBasedOnOHLC/plot/Open_at_{ctime()}", dpi=300)
-# plot_test_values_predicted(test_value_High, test_Pred_High,"test real value", "test predicted value", y_label="High Value" )
+plot_test_values_predicted(test_value_High, test_Pred_High,"test real value", "test predicted value", y_label="High Value" )
 # # plt.savefig(f"ModelBasedOnOHLC/plot/High_at_{ctime()}", dpi=300)
-# plot_test_values_predicted(test_value_Low, test_Pred_Low,"test real value", "test predicted value", y_label="Low Value" )
+plot_test_values_predicted(test_value_Low, test_Pred_Low,"test real value", "test predicted value", y_label="Low Value" )
 # # plt.savefig(f"ModelBasedOnOHLC/plot/Low_at_{ctime()}", dpi=300)
-# plot_test_values_predicted(test_value_Close, test_Pred_Close,"test real value", "test predicted value", y_label="Close Value" )
+plot_test_values_predicted(test_value_Close, test_Pred_Close,"test real value", "test predicted value", y_label="Close Value" )
 # plt.savefig(f"ModelBasedOnOHLC/plot/Close_at_{ctime()}", dpi=300)
 
-
+plt.show()
 print("The end.")
 
