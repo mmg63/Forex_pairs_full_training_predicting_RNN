@@ -29,7 +29,7 @@ class MyRNN(nn.Module):
                 batch_size:int = 32,
                 first_stack_hidden_size:int = 128,
                 last_stack_hidden_size:int = 64,
-                num_outputs:int = 1, # after the last hidden size for embedding to get the last output.
+                num_outputs:int = 4, # after the last hidden size for embedding to get the last output.
                 rnn_activation_function=torch.nn.Tanh,
                 embed_activation_function = torch.relu
                 ) -> None:
