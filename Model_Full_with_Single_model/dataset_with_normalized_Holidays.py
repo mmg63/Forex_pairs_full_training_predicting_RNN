@@ -2,6 +2,7 @@ import warnings
 from torch.utils.data import Dataset
 import torch
 import pandas as pd
+from datetime import datetime
 
 import matplotlib.pylab as plt
 
@@ -51,7 +52,7 @@ class Forex_train_Dataset(Dataset):
         self.dataset = torch.tensor(self.dataset_csv.values[:,1:].tolist())
         # get train samples from the dataset and set it again to the dataset
         len_dataset = len(self.dataset)
-        
+        # obtain trainset  by train_size_ratio
         self.dataset = self.dataset[:int(len_dataset*self.train_size_ratio), :]
         
         # get dates for plotting candles if it is neccessary 
