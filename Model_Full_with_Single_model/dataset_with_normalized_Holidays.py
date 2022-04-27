@@ -32,6 +32,21 @@ class Forex_train_Dataset(Dataset):
         
         # read CSV dataset and change it to torch.tensor type
         self.dataset_csv = pd.read_csv(csv_file, encoding="UTF=8")
+        
+        """
+        temp = pd.Timestamp("2020-11-25")
+
+        datetime.date(temp)
+        datetime.date(2020, 11, 25)
+
+        datetime.date(temp).weekday()
+        """
+        
+        
+        
+        
+        
+        
         # remove date from dataset in order to prepare data for test
         self.dataset = torch.tensor(self.dataset_csv.values[:,1:].tolist())
         # get train samples from the dataset and set it again to the dataset
