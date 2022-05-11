@@ -43,11 +43,6 @@ class Forex_train_Dataset(Dataset):
         datetime.date(temp).weekday()
         """
         
-        
-        
-        
-        
-        
         # remove date from dataset in order to prepare data for test
         self.dataset = torch.tensor(self.dataset_csv.values[:,1:].tolist())
         # get train samples from the dataset and set it again to the dataset
@@ -58,7 +53,6 @@ class Forex_train_Dataset(Dataset):
         # get dates for plotting candles if it is neccessary 
         self.dates = self.dataset_csv.values[:int(len_dataset*self.train_size_ratio),0].tolist()
         
-
 
         # normalize dataset based on its features.
         for i in range(self.dataset.shape[1] -4):   # -4 is for just normalizing input features
